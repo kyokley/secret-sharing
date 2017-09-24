@@ -36,11 +36,8 @@ def secret_int_to_points(secret_int, point_threshold, num_points, prime=None):
     return points
 
 
-def points_to_secret_int(points, prime=None):
-    """ Join int points into a secret int.
-
-        Get the intercept of a random polynomial defined by the given points.
-    """
+# TODO: Need to test points_to_point
+def points_to_point(points, x_val, prime=None):
     if not isinstance(points, list):
         raise ValueError("Points must be in list form.")
     for point in points:
@@ -52,9 +49,14 @@ def points_to_secret_int(points, prime=None):
     x_values, y_values = zip(*points)
     if not prime:
         prime = get_large_enough_prime(y_values)
-    free_coefficient = modular_lagrange_interpolation(0, points, prime)
-    secret_int = free_coefficient  # the secret int is the free coefficient
-    return secret_int
+    return x_val, modular_lagrange_interpolation(x_val, points, prime)
+
+def points_to_secret_int(points, prime=None):
+    """ Join int points into a secret int.
+
+        Get the intercept of a random polynomial defined by the given points.
+    """
+    return points_to_point(points, 0, prime=prime)[1]
 
 
 def point_to_share_string(point, charset):
@@ -123,6 +125,16 @@ class SecretSharer():
         secret_int = points_to_secret_int(points)
         secret_string = int_to_charset(secret_int, cls.secret_charset)
         return secret_string
+
+    # TODO: Test this method
+    @classmethod
+    def recover_share(cls, shares, index):
+        """ Given a set of shares, recreate the share at a specified index """
+        points = []
+        for share in shares:
+            points.append(share_string_to_point(share, cls.share_charset))
+        share_point = points_to_point(points, index)
+        return point_to_share_string(share_point, cls.share_charset)
 
 
 class HexToHexSecretSharer(SecretSharer):

@@ -8,8 +8,8 @@ from setuptools import setup
 
 setup(
     name='secretsharing',
-    version='0.2.6',
-    url='https://github.com/onenameio/secret-sharing',
+    version='0.2.7',
+    url='https://github.com/kyokley/secret-sharing',
     license='MIT',
     author='Halfmoon Labs',
     author_email='hello@halfmoon.io',

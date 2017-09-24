@@ -115,6 +115,10 @@ class SecretSharer():
         shares = []
         for point in points:
             shares.append(point_to_share_string(point, cls.share_charset))
+
+        recovered = cls.recover_secret(shares)
+        if secret_string != recovered:
+            raise ValueError('Shares did not recover secret. Check that secret does not begin with "{}"'.format(cls.secret_charset[0]))
         return shares
 
     @classmethod

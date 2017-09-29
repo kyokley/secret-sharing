@@ -19,6 +19,8 @@ setup(
         'secretsharing',
     ],
     zip_safe=False,
+    test_suite='nose.collector',
+    test_require=['nose'],
     install_requires=[
         'six',
         'utilitybelt',

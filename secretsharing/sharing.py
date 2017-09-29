@@ -36,12 +36,11 @@ def secret_int_to_points(secret_int, point_threshold, num_points, prime=None):
     return points
 
 
-# TODO: Need to test points_to_point
 def points_to_point(points, x_val, prime=None):
     if not isinstance(points, list):
         raise ValueError("Points must be in list form.")
     for point in points:
-        if not isinstance(point, tuple) and len(point) == 2:
+        if not isinstance(point, tuple) or len(point) != 2:
             raise ValueError("Each point must be a tuple of two values.")
         if not (isinstance(point[0], integer_types) and
                 isinstance(point[1], integer_types)):

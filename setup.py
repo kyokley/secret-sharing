@@ -20,7 +20,8 @@ setup(
     ],
     zip_safe=False,
     test_suite='nose.collector',
-    test_require=['nose'],
+    tests_require=['nose',
+                   'mock'],
     install_requires=[
         'six',
         'utilitybelt',

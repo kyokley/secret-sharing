@@ -9,7 +9,6 @@
 
 import random
 import unittest
-from test import test_support
 from utilitybelt import base64_chars
 from secretsharing import (secret_int_to_points,
                            points_to_secret_int,
@@ -24,12 +23,6 @@ from secretsharing import (secret_int_to_points,
 
 
 class ShamirSharingTest(unittest.TestCase):
-    def setUp(self):
-        pass
-
-    def tearDown(self):
-        pass
-
     def split_and_recover_secret(self, sharer_class, m, n, secret):
         shares = sharer_class.split_secret(secret, m, n)
         random.shuffle(shares)
@@ -87,13 +80,3 @@ class ShamirSharingTest(unittest.TestCase):
         self.split_and_recover_secret(
             SecretSharer, 2, 2,
             "c4bbcb1fbec99d65bf59d85c8cb62ee2db963f0fe106f483d9afa73bd4e39a8a")
-
-
-def test_main():
-    test_support.run_unittest(
-        ShamirSharingTest
-    )
-
-
-if __name__ == '__main__':
-    test_main()

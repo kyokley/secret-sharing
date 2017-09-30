@@ -9,6 +9,7 @@
 
 import random
 import unittest
+import mock
 from utilitybelt import base64_chars
 from secretsharing import (secret_int_to_points,
                            points_to_secret_int,
@@ -55,11 +56,17 @@ class ShamirSharingTest(unittest.TestCase):
             "5KJvsngHeMpm884wtkJNzQGaCErckhHJBGFsvd3VyK5qMZXj3hS")
 
     def test_hex_to_base64_sharing(self):
-        sharer_class = SecretSharer
-        sharer_class.share_charset = base64_chars
-        self.split_and_recover_secret(
-            sharer_class, 3, 5,
-            "c4bbcb1fbec99d65bf59d85c8cb62ee2db963f0fe106f483d9afa73bd4e39a8a")
+        try:
+            sharer_class = SecretSharer
+            old_share_charset = sharer_class.share_charset
+            sharer_class.share_charset = base64_chars
+            self.split_and_recover_secret(
+                sharer_class, 3, 5,
+                "c4bbcb1fbec99d65bf59d85c8cb62ee2db963f0fe106f483d9afa73bd4e39a8a")
+        except:
+            raise
+        finally:
+            sharer_class.share_charset = old_share_charset
 
     def test_2_of_3_sharing(self):
         self.split_and_recover_secret(

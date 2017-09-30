@@ -122,6 +122,9 @@ class TestRecoverShard(unittest.TestCase):
     def setUp(self):
         self.share_string_to_point_patcher = mock.patch('secretsharing.sharing.share_string_to_point')
         self.mock_share_string_to_point = self.share_string_to_point_patcher.start()
+        self.mock_share_string_to_point.side_effect = [(0, 1),
+                                                       (1, 2),
+                                                       (2, 3)]
 
         self.points_to_point_patcher = mock.patch('secretsharing.sharing.points_to_point')
         self.mock_points_to_point = self.points_to_point_patcher.start()
@@ -146,3 +149,12 @@ class TestRecoverShard(unittest.TestCase):
         actual = SecretSharer.recover_share(self.shares, self.index)
 
         self.assertEqual(expected, actual)
+        self.mock_share_string_to_point.assert_has_calls([mock.call('1-123', self.charset),
+                                                          mock.call('2-234', self.charset),
+                                                          mock.call('3-345', self.charset),
+                                                          ])
+        self.mock_points_to_point.assert_called_once_with([(0, 1),
+                                                           (1, 2),
+                                                           (2, 3)], self.index)
+        self.mock_point_to_share_string.assert_called_once_with(self.mock_points_to_point.return_value,
+                                                                self.charset)

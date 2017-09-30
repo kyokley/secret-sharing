@@ -98,7 +98,7 @@ def share_string_to_point(share_string, charset):
     return (x, y)
 
 
-class SecretSharer():
+class SecretSharer(object):
     """ Creates a secret sharer, which can convert from a secret string to a
         list of shares and vice versa. The splitter is initialized with the
         character set of the secrets and the character set of the shares that
@@ -106,9 +106,6 @@ class SecretSharer():
     """
     secret_charset = string.hexdigits[0:16]
     share_charset = string.hexdigits[0:16]
-
-    def __init__(self):
-        pass
 
     @classmethod
     def split_secret(cls, secret_string, share_threshold, num_shares):
@@ -132,7 +129,6 @@ class SecretSharer():
         secret_string = int_to_charset(secret_int, cls.secret_charset)
         return secret_string
 
-    # TODO: Test this method
     @classmethod
     def recover_share(cls, shares, index):
         """ Given a set of shares, recreate the share at a specified index """

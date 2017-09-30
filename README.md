@@ -1,7 +1,7 @@
 Secret Sharing
 =============
 
-[![CircleCI](https://img.shields.io/circleci/project/blockstack/secret-sharing.svg)](https://circleci.com/gh/blockstack/secret-sharing)
+[![Build Status](https://travis-ci.org/kyokley/secret-sharing.svg?branch=master)](https://travis-ci.org/kyokley/secret-sharing)
 [![PyPI](https://img.shields.io/pypi/v/secretsharing.svg)](https://pypi.python.org/pypi/secretsharing/)
 [![PyPI](https://img.shields.io/pypi/dm/secretsharing.svg)](https://pypi.python.org/pypi/secretsharing/)
 [![PyPI](https://img.shields.io/pypi/l/secretsharing.svg)](https://github.com/onenameio/secret-sharing/blob/master/LICENSE)
@@ -18,7 +18,7 @@ A library for sharding and sharing secrets (like Bitcoin private keys), using sh
 ### Hex Secrets
 
 #### Splitting into shares
-    
+
     >>> from secretsharing import SecretSharer
     >>> shares = SecretSharer.split_secret("c4bbcb1fbec99d65bf59d85c8cb62ee2db963f0fe106f483d9afa73bd4e39a8a", 2, 3)
     ['1-58cbd30524507e7a198bdfeb69c8d87fd7d2c10e8d5408851404f7d258cbcea7', '2-ecdbdaea89d75f8e73bde77a46db821cd40f430d39a11c864e5a4868dcb403ed', '3-80ebe2cfef5e40a2cdefef0923ee2bb9d04bc50be5ee308788af98ff609c380a']
@@ -65,7 +65,7 @@ Note: Bitcoin private keys are in [Base58 check](https://en.bitcoin.it/wiki/Base
 #### Recovering from base32 shares
 
     >>> BitcoinToB32SecretSharer.recover_secret(shares[0:2])
-    '5KJvsngHeMpm884wtkJNzQGaCErckhHJBGFsvd3VyK5qMZXj3hS'  
+    '5KJvsngHeMpm884wtkJNzQGaCErckhHJBGFsvd3VyK5qMZXj3hS'
 
 #### Splitting into reliably transcribable [zbase32](http://philzimmermann.com/docs/human-oriented-base-32-encoding.txt) shares
 
@@ -76,7 +76,7 @@ Note: Bitcoin private keys are in [Base58 check](https://en.bitcoin.it/wiki/Base
 #### Recovering from zbase32 shares
 
     >>> BitcoinToZB32SecretSharer.recover_secret(shares[0:2])
-    '5KJvsngHeMpm884wtkJNzQGaCErckhHJBGFsvd3VyK5qMZXj3hS'    
+    '5KJvsngHeMpm884wtkJNzQGaCErckhHJBGFsvd3VyK5qMZXj3hS'
 
 ### Raw integers
 
